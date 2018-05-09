@@ -43,4 +43,4 @@ model.summary()
 
 model.fit(X_train, y_train, validation_data=(X_test, y_test),
         epochs=config.epochs,
-        callbacks=[WandbCallback(validation_data=X_test, labels=labels)])
+        callbacks=[WandbCallback()])
