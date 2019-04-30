@@ -4,49 +4,39 @@ from keras.datasets import mnist
 from keras.callbacks import Callback
 
 import numpy as np
+from util import Images
 import wandb
 from wandb.keras import WandbCallback
 
 run = wandb.init()
 config = run.config
 
-config.epochs = 100
+config.epochs = 10
 
-(x_train, _), (x_test, _) = mnist.load_data()
+(X_train, _), (X_test, _) = mnist.load_data()
 
-x_train = x_train.astype('float32') / 255.
-x_test = x_test.astype('float32') / 255.
+X_train = X_train.astype('float32') / 255.
+X_test = X_test.astype('float32') / 255.
 
 model = Sequential()
-model.add(Reshape((28,28,1), input_shape=(28,28)))
-model.add(Conv2D(32, (3, 3), activation='relu', padding='same'))
-model.add(MaxPooling2D(2,2))
-model.add(Conv2D(32, (3, 3), activation='relu', padding='same'))
+model.add(Reshape((28, 28, 1), input_shape=(28, 28)))
+model.add(Conv2D(8, (3, 3), activation='relu', padding='same'))
+model.add(MaxPooling2D(2, 2))
+model.add(Conv2D(4, (3, 3), activation='relu', padding='same'))
+model.add(MaxPooling2D(2, 2))
+model.add(Conv2D(1, (3, 3), activation='relu', padding='same'))
+model.add(UpSampling2D((2, 2)))
+model.add(Conv2D(12, (3, 3), activation='relu', padding='same'))
 model.add(UpSampling2D((2, 2)))
 model.add(Conv2D(1, (3, 3), activation='relu', padding='same'))
-model.add(Reshape((28,28)))
+model.add(Reshape((28, 28)))
 
 model.compile(optimizer='adam', loss='mse')
 
-model.summary()
-
-class Images(Callback):
-      def on_epoch_end(self, epoch, logs):
-            indices = np.random.randint(self.validation_data[0].shape[0], size=8)
-            test_data = self.validation_data[0][indices]
-            pred_data = self.model.predict(test_data)
-            run.history.row.update({
-                  "examples": [
-                        wandb.Image(np.hstack([data, pred_data[i]]), caption=str(i))
-                        for i, data in enumerate(test_data)]
-            })
-
-model.fit(x_train, x_train,
-                epochs=config.epochs,
-                validation_data=(x_test, x_test), 
-                callbacks=[Images(), WandbCallback()])
+model.fit(X_train, X_train,
+          epochs=config.epochs,
+          validation_data=(X_test, X_test),
+          callbacks=[Images(), WandbCallback(save_model=False)])
 
 
 model.save('auto-cnn.h5')
-
-
