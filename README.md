@@ -1,16 +1,18 @@
 # Overview
 
-These are materials I use for a class on machine learning with scikit-learn, keras and tensorflow.  Each file is a self contained unit that demonstrates a specific thing.  Downloading or cloning this repository before class is a great way to follow along.
+These are materials I use for various classes on deep learning.  Each file is a self contained unit that demonstrates a specific thing.  Downloading or cloning this repository before class is a great way to follow along.
 
 # Reusing the materials
 
 Please feel free to use these materials for your own classes/projects etc.  If you do that, I would love it if you sent me a message and let me know what you're up to.
 
-# Setup
+# Videos
+
+You can find video overviews of a lot of the material at https://youtu.be/Zxrk88rA7fA.
 
 ## Prerequisites
 
-Getting your machine setup is essential to following along with a class.  I try really hard to make this class as easy to setup as possible, but setting up a machine for development can be challenging if you haven't done it before.  When in doubt, copy the error messages into Google!  All of the programs you need to install for this are extremely standard and for any issue you run into, hundreds of other people have encountered the same issue.
+These classes are intended for people who are comfortable wirth python.
 
 ### Reading material for people who haven't done a lot of programming
 
@@ -35,7 +37,15 @@ A lot of people like to follow along with ipython or jupyter notebooks and I thi
 If you've never used pandas or numpy - they are great tools and I use them heavily in my work and for this class.  I assume no knlowedge of pandas and numpy but you may want to do some learning on your own.  You can get a quick overview of pandas at http://pandas.pydata.org/pandas-docs/stable/10min.html.  There is a great overview of numpy at https://docs.scipy.org/doc/numpy/user/quickstart.html.
 
 ## Installation
-Before the class, please run the following commands to install the prerequisite code.
+I recommend running this code in a pre-configured environment.  You can rent an AWS EC2 node with any of the "Deep Learning" AMIs from aws.amazon.com or a GCP instance.
+
+Once you have a cloud machine setup run:
+
+```
+pip install -r requirements.txt
+```
+
+You can also install this class locally, but it may be trickier.
 
 ### Windows
 
@@ -115,8 +125,6 @@ If you get an error message here, most likely you don't have git installed.  Go 
 ```
 pip install -r requirements.txt
 ```
-
-
 ## Check installation
 
 To make sure your installation works go to the directory where this file is and run
@@ -132,4 +140,24 @@ python test-keras.py
 
 You should see the output "Using TensorFlow backend.  Keras is installed!"
 
+##Troubleshooting on Ubuntu
+
+If the above 2 commands fail and you see an error "ImportError no module named".. verify if you have multiple versions of python installed, specially if you are on Ubuntu version 16 or higher.
+
+Run python --version 
+	-- may be you have v2.7?
+Run python3 --version
+	-- may be you have python 3.5+?
+
+If you have python3 installed, verify your ml-class installation by running below commands
+python3 test-scikit.py
+```
+
+You should see the output "Scikit is installed!"
+
+```
+python3 test-keras.py
+```
+
+You should see the output "Using TensorFlow backend.  Keras is installed!"
 

@@ -11,7 +11,9 @@ import wandb
 
 run = wandb.init()
 config = run.config
-
+config.optimizer = "adam"
+config.epochs = 50
+config.dropout = 10
 config.hidden_nodes = 100
 
 # load data
@@ -33,14 +35,14 @@ num_classes = y_train.shape[1]
 
 
 # create model
-model=Sequential()
-model.add(Flatten(input_shape=(img_width,img_height)))
+model = Sequential()
+model.add(Flatten(input_shape=(img_width, img_height)))
 model.add(Dense(config.hidden_nodes, activation='relu'))
 model.add(Dense(num_classes, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer=config.optimizer,
-                    metrics=['accuracy'])
+              metrics=['accuracy'])
 
 # Fit the model
-model.fit(X_train, y_train, validation_data=(X_test, y_test), 
-      epochs=config.epochs,
-      callbacks=[WandbCallback(validation_data=X_test, labels=labels)])
+model.fit(X_train, y_train, validation_data=(X_test, y_test),
+          epochs=config.epochs,
+          callbacks=[WandbCallback(data_type="image", labels=labels)])

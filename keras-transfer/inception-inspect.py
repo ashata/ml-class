@@ -16,4 +16,4 @@ model.summary()
 preds = model.predict(x)
 
 print('Predicted:', decode_predictions(preds, top=3)[0])
-model.save('image.h5')
+#model.save('image.h5')

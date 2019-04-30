@@ -1,4 +1,4 @@
 [default]
-entity: trainai
-project: digits
+entity: mlclass
+project: digits-may1
 base_url: https://api.wandb.ai

@@ -1,4 +1,4 @@
 [default]
-entity: trainai
-project: encoding
+entity: qualcomm
+project: autoencoder-mar28
 base_url: https://api.wandb.ai

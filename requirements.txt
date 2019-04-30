@@ -1,5 +1,5 @@
 tensorflow
-keras
+keras==2.2.0
 pandas
 numpy
 pillow
@@ -7,3 +7,4 @@ wandb
 h5py
 opencv-python
 scikit-learn
+scikit-image
